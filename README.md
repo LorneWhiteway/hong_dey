@@ -1,1 +1,1 @@
-# hong_dey
+Based on the paper 1504.00006 by Hong and Dey

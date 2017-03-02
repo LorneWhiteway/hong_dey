@@ -20,7 +20,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 
 	if configuration == 0:
 		# VERY FAST TEST SUITE
-		input_file_name_suffix = "input/buzzard_v2/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_zspec_vl04_redmapper_central_and_redmagic.fits.gz"
+		catalogue_file_name_suffix = "input/buzzard_v2/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_zspec_vl04_redmapper_central_and_redmagic.fits.gz"
 		id_field_name = "id"
 		position_specification = "RA_DEC_REDSHIFT"
 		position_field_names = ("ra", "dec", "z_spec")
@@ -29,7 +29,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		output_file_name_suffix = "hong_dey/output/fast_test_set.hdo"
 	elif configuration == 1:
 		# See p HD 73. Used when testing linking length sensitivity
-		input_file_name_suffix = "input/buzzard_v2/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_zspec_vl04_redmapper_central_and_redmagic.fits.gz"
+		catalogue_file_name_suffix = "input/buzzard_v2/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_zspec_vl04_redmapper_central_and_redmagic.fits.gz"
 		id_field_name = "id"
 		position_specification = "RA_DEC_REDSHIFT"
 		position_field_names = ("ra", "dec", "z_spec")
@@ -38,7 +38,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		output_file_name_suffix = "hong_dey/output/linking_length_sensitivity.hdo." + str(int(2.0 * linking_length)).zfill(2)
 	elif configuration == 2:
 		# Millennium survey data
-		input_file_name_suffix = "input/millennium/millennium_data_000.npy"
+		catalogue_file_name_suffix = "input/millennium/millennium_data_000.npy"
 		id_field_name = "sequential"
 		position_specification = "X_Y_Z"
 		position_field_names = ("X", "Y", "Z")
@@ -46,7 +46,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		output_file_name_suffix = "hong_dey/output/millennium/millennium" + str(int(target_average_edges_per_vertex)).zfill(2) + ".hdo"
 	elif configuration == 3:
 		# From the very original investigations
-		input_file_name_suffix = "input/drgk_example/sva1_gold_1.0.2_run_redmapper_v6.3.3_redmagic_0.5-10.fit"
+		catalogue_file_name_suffix = "input/drgk_example/sva1_gold_1.0.2_run_redmapper_v6.3.3_redmagic_0.5-10.fit"
 		id_field_name = "coadd_objects_id"
 		position_specification = "RA_DEC_REDSHIFT"
 		position_field_names = ("ra", "dec", "z")
@@ -54,7 +54,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		output_file_name_suffix = "hong_dey/output/output.hdo"
 	elif configuration == 4:
 		# Buzzard simulated data, used in preparing slides for 11 Feb 2016 telecon
-		input_file_name_suffix = "input/buzzard_v1/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_redmagic_0.5-10.fit"
+		catalogue_file_name_suffix = "input/buzzard_v1/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_redmagic_0.5-10.fit"
 		id_field_name = "coadd_objects_id"
 		position_specification = "RA_DEC_REDSHIFT"
 		position_field_names = ("ra", "dec", "zspec")
@@ -62,7 +62,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		output_file_name_suffix = "hong_dey/output/output.hdo"
 	elif configuration == 5:
 		# A file containing redmapper central galaxies and redmagic galaxies, as suggested by Peter in 11 Feb 2016 telecon. Produced by LW on 10 Mar 2016.
-		input_file_name_suffix = "input/buzzard_v2/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_zspec_vl04_redmapper_central_and_redmagic.fits.gz"
+		catalogue_file_name_suffix = "input/buzzard_v2/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_zspec_vl04_redmapper_central_and_redmagic.fits.gz"
 		id_field_name = "id"
 		position_specification = "RA_DEC_REDSHIFT"
 		position_field_names = ("ra", "dec", "zspec")
@@ -70,7 +70,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		output_file_name_suffix = "hong_dey/output/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_zspec_vl04_redmapper_central_and_redmagic.hdo"
 	elif configuration == 6:
 		# Preparation for telecon on 27 April 2016. Needs to know z_mean and use_z_spec.
-		input_file_name_suffix = "input/buzzard_v2/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_zspec_vl04_redmapper_central_and_redmagic.fits.gz"
+		catalogue_file_name_suffix = "input/buzzard_v2/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_zspec_vl04_redmapper_central_and_redmagic.fits.gz"
 		id_field_name = "id"
 		position_specification = "RA_DEC_REDSHIFT"
 		position_field_names = ("ra", "dec", ("z_spec" if use_z_spec else "z"))
@@ -78,7 +78,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		output_file_name_suffix = "hong_dey/output/20160427/Network_" + ("Z_SPEC" if use_z_spec else "ZDs") + "_z" + ("%.3f" % (z_mean)) + ".hdo"
 	elif configuration == 7:
 		# For use with specific geometry.
-		input_file_name_suffix = "input/specific_geometry/test10.fits"
+		catalogue_file_name_suffix = "input/specific_geometry/test10.fits"
 		id_field_name = "sequential"
 		position_specification = "X_Y_Z"
 		position_field_names = ("X", "Y", "Z")
@@ -86,7 +86,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		output_file_name_suffix = "hong_dey/output/specific_geometry/test_10_" + str(int(target_average_edges_per_vertex)).zfill(2) + ".hdo"
 	elif configuration == 8:
 		# Similar to the analysis done for the telecon on 27 April 2016, but now using Y1A1 data.
-		input_file_name_suffix = "input/y1a1/joint_y1_redmapper_redmagic.fits"
+		catalogue_file_name_suffix = "input/y1a1/joint_y1_redmapper_redmagic.fits"
 		id_field_name = "id"
 		position_specification = "RA_DEC_REDSHIFT"
 		position_field_names = ("ra", "dec", ("z_spec" if use_z_spec else "z"))
@@ -94,7 +94,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		output_file_name_suffix = "hong_dey/output/20160509/Network_" + ("Z_SPEC" if use_z_spec else "Z_PHOTO") + "_z" + ("%.3f" % (z_mean)) + ".hdo"
 	elif configuration == 9:
 		# Sloan great wall data from cosmodb. See my notes p. HD 137-9.
-		input_file_name_suffix = "input/sdss/SGW.fits"
+		catalogue_file_name_suffix = "input/sdss/SGW.fits"
 		id_field_name = "ID"
 		position_specification = "X_Y_Z"
 		position_field_names = ("X", "Y", "Z")
@@ -102,7 +102,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		output_file_name_suffix = "hong_dey/output/sdss/sdss" + str(int(target_average_edges_per_vertex)).zfill(2) + ".hdo"
 	elif configuration == 10:
 		# Sloan great wall data from table2i.
-		input_file_name_suffix = "input/sdss/J_A+A_514_A102_table2i.dat.gz.fits.gz"
+		catalogue_file_name_suffix = "input/sdss/J_A+A_514_A102_table2i.dat.gz.fits.gz"
 		id_field_name = "Ngal"
 		position_specification = "RA_DEC_DISTANCE"
 		position_field_names = ("RAdeg", "DEdeg", "Dist")
@@ -111,7 +111,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 	elif configuration == 11:
 		# sphereX data from cosmodb. See my notes p. HD 151.
 		sphere_num = str(5)
-		input_file_name_suffix = "input/sdss/sphere" + sphere_num + ".fits"
+		catalogue_file_name_suffix = "input/sdss/sphere" + sphere_num + ".fits"
 		id_field_name = "ID"
 		position_specification = "X_Y_Z"
 		position_field_names = ("X", "Y", "Z")
@@ -119,7 +119,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		output_file_name_suffix = "hong_dey/output/sphere" + sphere_num + "/sdss" + str(int(target_average_edges_per_vertex)).zfill(2) + ".hdo"
 	elif configuration == 12:
 		# For the cosmic web conference - degrading the photo-z error. Needs 'run num' as an input.
-		input_file_name_suffix = "input/20160609/joint_y1_redmapper_redmagic_degraded_walk.fits.gz"
+		catalogue_file_name_suffix = "input/20160609/joint_y1_redmapper_redmagic_degraded_walk.fits.gz"
 		id_field_name = "id"
 		position_specification = "RA_DEC_REDSHIFT"
 		redshift_field_names = ["zspec", "zphoto_0.1", "zphoto_0.2", "zphoto_0.3", "zphoto_0.4", "zphoto_0.5", "zphoto_0.6", "zphoto_0.7", "zphoto_0.8", "zphoto_0.9", "zphoto_1.0"]
@@ -128,7 +128,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		output_file_name_suffix = "hong_dey/output/20160609/test_" + str(run_num).zfill(2) + ".hdo"
 	elif configuration == 13:
 		# Similar to configuration 8, but for a slice 0.45 - 0.50. This is for slide 10 for the Cosmic Web conference (9 June 2016).
-		input_file_name_suffix = "input/y1a1/joint_y1_redmapper_redmagic.fits"
+		catalogue_file_name_suffix = "input/y1a1/joint_y1_redmapper_redmagic.fits"
 		id_field_name = "id"
 		position_specification = "RA_DEC_REDSHIFT"
 		position_field_names = ("ra", "dec", "z")
@@ -136,7 +136,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		output_file_name_suffix = "hong_dey/output/20160609/slide10.hdo"
 	elif configuration == 14:
 		# See p. HD 190. Used to generate values for first weak lensing trials.
-		input_file_name_suffix = "input/WL/joint_y1_redmapper_redmagic_degraded.fits.gz"
+		catalogue_file_name_suffix = "input/WL/joint_y1_redmapper_redmagic_degraded.fits.gz"
 		id_field_name = "id"
 		position_specification = "RA_DEC_REDSHIFT"
 		position_field_names = ("ra", "dec", "zspec")
@@ -144,7 +144,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		output_file_name_suffix = "hong_dey/output/WL/joint_y1_redmapper_redmagic_degraded.hdo"
 	elif configuration == 15:
 		# From 28 Nov 2016 - run done for DK in preparation for his Belfast presentation.
-		input_file_name_suffix = "input/20161128/joint_bcc_mock1_redmapper_redmagic.fits"
+		catalogue_file_name_suffix = "input/20161128/joint_bcc_mock1_redmapper_redmagic.fits"
 		id_field_name = "id"
 		position_specification = "RA_DEC_REDSHIFT"
 		position_field_names = ("ra", "dec", "zspec")
@@ -152,7 +152,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		output_file_name_suffix = "hong_dey/output/20161128/joint_bcc_mock1_redmapper_redmagic_" + str(int(target_average_edges_per_vertex)).zfill(2) + ".hdo"
 	elif configuration == 16:
 		# From 9 Feb 2017 - run done for DK for use in the filament comparison project.
-		input_file_name_suffix = "input/buzzard_v2/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_zspec_vl04_redmapper_central_and_redmagic.fits.gz"
+		catalogue_file_name_suffix = "input/buzzard_v2/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_zspec_vl04_redmapper_central_and_redmagic.fits.gz"
 		id_field_name = "id"
 		position_specification = "RA_DEC_REDSHIFT"
 		position_field_names = ("ra", "dec", "z_spec")
@@ -171,7 +171,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		
 	
 	hong_dey_run(
-		(data_directory + input_file_name_suffix),
+		(data_directory + catalogue_file_name_suffix),
 		id_field_name,
 		position_specification,
 		str(position_field_names),
@@ -234,7 +234,7 @@ def hong_dey_run_config_file(configuration_file_name, configuration_section):
 		raise "configuration_file_name " + configuration_file_name + " has unexpected type"
 
 	hong_dey_run(
-		input_file_name = config.get(configuration_section, "input_file_name"),
+		catalogue_file_name = config.get(configuration_section, "catalogue_file_name"),
 		id_field_name = config.get(configuration_section, "id_field_name"),
 		position_specification = config.get(configuration_section, "position_specification"),
 		position_field_names_str = config.get(configuration_section, "position_field_names_str"),
@@ -254,7 +254,7 @@ def hong_dey_run_config_file(configuration_file_name, configuration_section):
 
 
 def hong_dey_run(
-	input_file_name, 
+	catalogue_file_name, 
 	id_field_name,
 	position_specification,
 	position_field_names_str,
@@ -293,8 +293,8 @@ def hong_dey_run(
 	#######################################
 	print "Getting data"
 
-	print "input_file_name = " + str(input_file_name)
-	out_dict["input_file_name"] = input_file_name
+	print "catalogue_file_name = " + str(catalogue_file_name)
+	out_dict["catalogue_file_name"] = catalogue_file_name
 	
 	print "id_field_name = " + str(id_field_name)
 	out_dict["id_field_name"] = id_field_name
@@ -313,15 +313,15 @@ def hong_dey_run(
 
 	
 	# Convert certain string inputs to arrays.
-	position_field_names = position_field_names_str.strip('()').split(",")
-	filter_condition = [float(x) for x in filter_condition_str.strip('()').split(",")]
+	position_field_names = cwu.string_array_from_string_representation(position_field_names_str)
+	filter_condition = cwu.float_array_from_string_representation(filter_condition_str)
 
 	filter_condition = scale_filter_condition(filter_condition, filter_condition_scale)
 	
 	print "filter_condition = " + str(filter_condition)
 	out_dict["filter_condition"] = str(filter_condition)
 
-	x = pyfits.open(input_file_name)
+	x = pyfits.open(catalogue_file_name)
 
 	# Cast the data arrays from single-precision (i.e. type=float32) to double-precision (type=float=float64) as this is what the cosmic_web C++ module expects.
 	# An alternative would be to amend cw so that it could handle arrays of different types; for this we might want to use PyArray_FROMANY.
@@ -673,7 +673,7 @@ def create_graphs_for_20160509_conference():
 try:
 	import sys
 	
-	hong_dey_run_config_file('foo.cfg', 'Configuration_0')
+	hong_dey_run_config_file(sys.argv[1], sys.argv[2])
 
 	#hong_dey_run_configuration(configuration = 16, target_average_edges_per_vertex = 6.0)
 	#hong_dey_run_configuration(configuration = 15, target_average_edges_per_vertex = float(sys.argv[1]))

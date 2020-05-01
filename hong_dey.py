@@ -155,9 +155,17 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 		catalogue_file_name_suffix = "input/buzzard_v2/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_zspec_vl04_redmapper_central_and_redmagic.fits.gz"
 		id_field_name = "id"
 		position_specification = "RA_DEC_REDSHIFT"
-		position_field_names = ("ra", "dec", "z_spec")
+		position_field_names = "(ra,dec,z_spec)"
 		filter_condition = (45.0, 75.0, -54.0, -44.0, 0.45, 0.50) # Slice of 'Minimal masked' large data set ...
 		output_file_name_suffix = "hong_dey/output/20170209/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_zspec_vl04_redmapper_central_and_redmagic.hdo"
+	elif configuration == 17:
+		# As 16, but photoz.
+		catalogue_file_name_suffix = "input/buzzard_v2/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_zspec_vl04_redmapper_central_and_redmagic.fits.gz"
+		id_field_name = "id"
+		position_specification = "RA_DEC_REDSHIFT"
+		position_field_names = "(ra,dec,z)"
+		filter_condition = (45.0, 75.0, -54.0, -44.0, 0.45, 0.50) # Slice of 'Minimal masked' large data set ...
+		output_file_name_suffix = "hong_dey/output/20170209/buzzard-v1.1-y1a1_run_redmapper_v6.4.4_zphoto_vl04_redmapper_central_and_redmagic.hdo"
 		
 	if (target_average_edges_per_vertex is None) == (linking_length is None):
 		raise SystemError("Exactly one of target_average_edges_per_vertex and linking_length should be specified")
@@ -172,6 +180,7 @@ def hong_dey_run_configuration(configuration, target_average_edges_per_vertex = 
 	
 	hong_dey_run(
 		(data_directory + catalogue_file_name_suffix),
+		structure_file_name_default(),
 		id_field_name,
 		position_specification,
 		str(position_field_names),
@@ -210,6 +219,9 @@ def cluster_object_percentile_default():
 def high_wcl_percentile_default():
 	return 0.85 # Approximately 1-500/3366; see top of second column of p. 8 of the H&D paper'.
 	
+def structure_file_name_default():
+	return ""
+	
 
 	
 		
@@ -226,6 +238,7 @@ def hong_dey_run_config_file(configuration_file_name, configuration_section):
 	defaults['filament_object_percentile'] = str(filament_object_percentile_default())
 	defaults['cluster_object_percentile'] = str(cluster_object_percentile_default())
 	defaults['high_wcl_percentile'] = str(high_wcl_percentile_default())
+	defaults['structure_file_name'] = structure_file_name_default()
 
 	if configuration_file_name[-4:] == ".cfg":
 		config = ConfigParser.ConfigParser(defaults)
@@ -235,6 +248,7 @@ def hong_dey_run_config_file(configuration_file_name, configuration_section):
 
 	hong_dey_run(
 		catalogue_file_name = config.get(configuration_section, "catalogue_file_name"),
+		structure_file_name = config.get(configuration_section, "structure_file_name"),
 		id_field_name = config.get(configuration_section, "id_field_name"),
 		position_specification = config.get(configuration_section, "position_specification"),
 		position_field_names_str = config.get(configuration_section, "position_field_names_str"),
@@ -254,7 +268,8 @@ def hong_dey_run_config_file(configuration_file_name, configuration_section):
 
 
 def hong_dey_run(
-	catalogue_file_name, 
+	catalogue_file_name,
+	structure_file_name,
 	id_field_name,
 	position_specification,
 	position_field_names_str,
@@ -311,6 +326,8 @@ def hong_dey_run(
 	print "filter_condition_scale = " + str(filter_condition_scale)
 	out_dict["filter_condition_scale"] = filter_condition_scale
 
+	print "output_file_name = " + str(output_file_name)
+	out_dict["output_file_name"] = output_file_name
 	
 	# Convert certain string inputs to arrays.
 	position_field_names = cwu.string_array_from_string_representation(position_field_names_str)
@@ -628,11 +645,34 @@ def hong_dey_run(
 			out_dict["dimensionality_x"] = dimensionality_x
 			out_dict["dimensionality_y"] = dimensionality_y
 
-
-
+		#######################################
+		# 7. Comparison of results with structure file
+		# For toy models we have a 'structure file' speciying the locations of the clusters and filaments.
+		# The code that follows assesses the correspondence between the HD output and the structures.
+		if structure_file_name != "":
+			with open(structure_file_name, "rb") as ofile:
+				structures = cPickle.load(ofile)
+			for structure in structures:
+				if structure["object"] == "filament":
+					cylinder_endpoint = [np.array(cwu.get_structure_by_name(structures, name)["centre"]) for name in structure["location"].split("-")] # A two-element list
+					dist_between_cylinder_endpoints_using_filaments = sys.float_info.max
+					for filament_index in range(num_filaments):
+						filament_index_filter = np.where(filament_identifier == filament_index)
+						X_filament_index = X[filament_index_filter]
+						Y_filament_index = Y[filament_index_filter]
+						Z_filament_index = Z[filament_index_filter]
+						dist_between_cylinder_endpoints_using_this_filament = sum([np.amin(np.sqrt((cylinder_endpoint[i][0] - X_filament_index)**2 + (cylinder_endpoint[i][1] - Y_filament_index)**2 + (cylinder_endpoint[i][2] - Z_filament_index)**2)) for i in range(2)]) # See p. HD 469
+						dist_between_cylinder_endpoints_using_filaments = min(dist_between_cylinder_endpoints_using_filaments, dist_between_cylinder_endpoints_using_this_filament)
+					out_dict[structure["name"]+ "_dist"] = dist_between_cylinder_endpoints_using_filaments
+							
+							
+						
+						
+						
+		
 
 	#######################################
-	# 7. Put all the results together
+	# 8. Put all the results together
 	print "Output"
 
 	elapsed_time = time.time() - start_time # Have to put this here so it can be written to file.
@@ -673,12 +713,13 @@ def create_graphs_for_20160509_conference():
 try:
 	import sys
 	
-	hong_dey_run_config_file(sys.argv[1], sys.argv[2])
+	#hong_dey_run_config_file(sys.argv[1], sys.argv[2])
 
-	#hong_dey_run_configuration(configuration = 16, target_average_edges_per_vertex = 6.0)
+	hong_dey_run_configuration(configuration = 17, target_average_edges_per_vertex = 6.0)
 	#hong_dey_run_configuration(configuration = 15, target_average_edges_per_vertex = float(sys.argv[1]))
 	#hong_dey_run_configuration(configuration = 8, target_average_edges_per_vertex = 6.0, use_z_spec = False, z_mean = standard_z_means()[int(sys.argv[1])])
 	#hong_dey_run_configuration(configuration = 12, target_average_edges_per_vertex = 6.0, run_num = int(sys.argv[1]))
+
 	
 
 
